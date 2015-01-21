@@ -1,0 +1,50 @@
+buildscript {
+    ext {
+        springVersion = '1.2.1.RELEASE'
+        camelVersion = '2.14.1'
+    }
+    repositories {
+    	mavenLocal()
+        maven { url "http://repo.spring.io/libs-release" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'spring-boot'
+
+targetCompatibility = 1.7
+sourceCompatibility = 1.7
+
+version = '0.1'
+
+repositories {
+    mavenCentral()
+    maven { url "http://repo.spring.io/libs-release" }
+}
+
+dependencies {
+    // spring deps 
+    compile("org.springframework.boot:spring-boot-starter-web:${springVersion}")
+    compile("org.springframework.boot:spring-boot-starter-actuator:${springVersion}")
+    compile("org.springframework:spring-tx")
+
+    // Camel deps
+    compile("org.apache.camel:camel-servlet:${camelVersion}")
+    compile("org.apache.camel:camel-jms:${camelVersion}")
+    compile("org.apache.camel:camel-spring-javaconfig:${camelVersion}")
+    compile("org.apache.camel:camel-stream:${camelVersion}")
+    compile('org.apache.activemq:activemq-camel:5.7.0')
+
+    // Test deps
+    testCompile("org.springframework.boot:spring-boot-starter-test:${springVersion}")
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.2.1'
+}
+
+
